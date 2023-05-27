@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Form Upload - UT";
+}
+
+<div class="text-center">
+    <h1 class="display-6">Form Upload</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+            <a href="@TempData["DownloadUrl"]" target="_blank"> Download here.</a>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <form action="./FormUpload/Upload" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="file" class="form-label">Select a File:</label>
+                <input type="file" class="form-control" name="file" id="file" accept="image/*" />
+            </div>
+            <div class="mb-3">
+                <label for="slug" class="form-label">Enter Slug:</label>
+                <input type="text" class="form-control" name="slug" id="slugInput" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>

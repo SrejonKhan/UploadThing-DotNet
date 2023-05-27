@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Ajax Form Upload - UT";
+}
+
+<div class="text-center">
+    <h1 class="display-6">AJAX Form Upload</h1>
+    <form enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="file" class="form-control-file" id="file" name="file" accept="image/*" style="display: none;">
+            <button type="button" class="btn btn-primary" onclick="selectFile()" style="width: 100px !important; height:40px !important">
+                <div class="d-flex flex-row g-4 align-items-center justify-content-center">
+                    <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                    <div id="submit-btn-text" class="ml-1" style="display: block;">Upload</div>
+                </div>
+            </button>
+            <span id="file-name"></span>
+        </div>
+        <div style="margin-top:15px">
+            <div id="result"></div>
+            <a id="download-link" href="" target="_blank" style="display: none;">Download file</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function selectFile() {
+        let fileInput = document.getElementById('file');
+        let tmpFileInput = fileInput.cloneNode(true);
+        fileInput.parentNode.replaceChild(tmpFileInput, fileInput);
+        fileInput.files.length = 0;
+        fileInput.click();
+        fileInput.addEventListener('change', (e) => {
+            const selectedFile = fileInput.files[0];
+            uploadFile(selectedFile);
+        });
+    }
+
+    async function uploadFile (selectedFile) {
+        if (!selectedFile) {
+            return;
+        }
+
+        const submitBtnText = document.getElementById("submit-btn-text");
+        const resultElement = document.getElementById("result");
+        const spinnerElement = document.getElementById('spinner');
+        const downloadElement = document.getElementById("download-link");
+
+        spinnerElement.style.display = 'block';
+        submitBtnText.style.display = 'none';
+        resultElement.innerText = '';
+        downloadElement.style.display = 'none';
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        try {
+            const response = await fetch("./AjaxFormUpload/Upload", {
+                method: 'POST',
+                body: formData
+            });
+
+            const jsonObj = await response.json();
+            console.log(jsonObj);
+
+            if(response.status == 200) {
+                resultElement.innerText = 'Your file made it to UploadThing!';
+
+                downloadElement.href = jsonObj.url;
+                downloadElement.style.display = 'inline';
+            }
+            else {
+                resultElement.innerText = jsonObj.value;
+            }
+
+            spinnerElement.style.display = 'none';
+            submitBtnText.style.display = 'block';
+      } catch (error) {
+            console.error('Error:', error);
+      }
+    }
+</script>
