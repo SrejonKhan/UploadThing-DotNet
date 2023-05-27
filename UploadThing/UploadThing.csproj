@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_")).Core</RootNamespace>
+    <Authors>Srejon Khan</Authors>
+    <Product>$(AssemblyName).Core</Product>
+    <RepositoryUrl>https://github.com/SrejonKhan/UploadThing-DotNet</RepositoryUrl>
+    <PackageTags>aws-s3, upload, file</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>"A thing for uploading files.", now in DotNet ecosystem.</Description>
+    <PackageId>$(AssemblyName).Core</PackageId>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
