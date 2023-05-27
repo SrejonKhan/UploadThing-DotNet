@@ -2,6 +2,14 @@
 
 "A thing for uploading files.", now in DotNet ecosystem.
 
+## Get Package
+
+Install the latest version from [NuGet](https://www.nuget.org/packages/UploadThing.Core/).
+
+## Get Started
+
+A basic demonstration what can be achieved with this library -
+
 ```csharp
 var options = new UploadThing.Core.UploadThingOptions(
     UPLOADTHING_SECRET: "BETTER_READ_FROM_SECRET"
